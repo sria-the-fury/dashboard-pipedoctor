@@ -1,6 +1,6 @@
 <?php
 // Get the database URL from the Heroku environment variable
-$db_url = getenv('JAWSDB_URL');
+$db_url = getenv('JAWSDB_ROSE_URL');
 
 if ($db_url) {
     // Parse the URL to get the connection details
