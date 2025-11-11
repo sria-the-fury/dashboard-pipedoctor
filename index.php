@@ -71,17 +71,13 @@
         <div class="card-info">
           <?php
           include 'connection.php';
-          $review_count_query = "SELECT COUNT(*) AS total_reviews, AVG(clientRating) AS average_rating FROM testimony";
-          $message_count_query = "SELECT COUNT(*) AS total_messages FROM message";
+          $review_count_query = "SELECT COUNT(*) AS total_reviews, AVG(clientRating) AS average_rating FROM reviews";
+
           $review_count_result = $connection_sql->query($review_count_query);
-          $message_count_result = $connection_sql->query($message_count_query);
+
           $total_reviews = 0;
           $average_rating = 0.0;
-          $total_messages = 0;
-          if ($message_count_result && $message_count_result->num_rows > 0) {
-            $messages_row = $message_count_result->fetch_assoc();
-            $total_messages = (int)$messages_row['total_messages'];
-          }
+
           if ($review_count_result && $review_count_result->num_rows > 0) {
             $row = $review_count_result->fetch_assoc();
             $total_reviews = (int)$row['total_reviews'];
