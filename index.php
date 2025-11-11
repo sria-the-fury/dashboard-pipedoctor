@@ -238,6 +238,26 @@
 
         </div>
       </div>
+      <div class="news-form-area">
+        <h2>Publish Your News</h2>
+        <div class="news-form-div backdrop-blur-l round frosted-glass">
+          <form id="news-form" method="POST">
+            <div class="form-group">
+              <label for="title">News Title</label>
+              <input type="text" id="news-title" name="title" required maxlength="80">
+            </div>
+            <div class="form-group">
+              <label for="article">News Article</label>
+              <textarea maxlength="500" id="news-article" name="article" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="round-corner button ">Publish Your News</button>
+
+          </form>
+        </div>
+
+
+      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>

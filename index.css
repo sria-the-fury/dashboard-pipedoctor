@@ -302,7 +302,7 @@ button[type="submit"]:hover {
 
 .review-data {
   min-width: 350px;
-  width: 600px;
+  width: 100%;
   scrollbar-width: none;
   h2 {
     text-align: center;
@@ -310,6 +310,17 @@ button[type="submit"]:hover {
 }
 .review-data::-webkit-scrollbar {
   display: none;
+}
+
+.news-form-area {
+  min-width: 350px;
+  width: 100%;
+  padding: 10px 10px;
+  scrollbar-width: none;
+  border-radius: 10px;
+  h2 {
+    text-align: center;
+  }
 }
 
 .review-list {
@@ -565,84 +576,6 @@ button[type="submit"]:hover {
   padding: 5px 5px;
 }
 
-.message-content {
-  padding: 10px 15px;
-  max-width: 100%;
-
-  background-color: #f1f1f1;
-  color: #000;
-  border-radius: 15px;
-  line-height: 1.4;
-
-  position: relative;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.message-content::before {
-  content: "";
-  position: absolute;
-
-  top: -9px;
-  left: 10px;
-
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-bottom-color: #f1f1f1;
-  border-top: 0;
-}
-
-.message-action {
-  display: flex;
-  flex-direction: row;
-  margin-top: 5px;
-
-  gap: 10px;
-  align-items: center;
-  justify-items: center;
-  align-content: center;
-  justify-content: center;
-}
-
-.mark-as-read {
-  background-color: #28a745;
-  padding: 3px 3px;
-  border-radius: 5px;
-  span {
-    font-size: 0.9em;
-  }
-}
-.mark-as-responded {
-  background-color: blueviolet;
-  padding: 3px 3px;
-  border-radius: 5px;
-  span {
-    font-size: 0.9em;
-  }
-}
-
-.reply-email {
-  background-color: cadetblue;
-  padding: 3px 3px;
-  border-radius: 5px;
-  span {
-    font-size: 0.9em;
-  }
-  a {
-    text-decoration: none;
-    color: white;
-  }
-}
-.message-delete {
-  background-color: #f05417;
-  padding: 3px 3px;
-  border-radius: 5px;
-  span {
-    font-size: 0.9em;
-  }
-}
-
 .action-btn:hover {
   cursor: pointer;
 }
@@ -662,26 +595,6 @@ button[type="submit"]:hover {
   justify-items: center;
   align-content: center;
   justify-content: center;
-}
-
-#message-filter {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: none;
-  color: white;
-  font-family: "Epunda Slab", serif !important;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  font-size: 1em;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-#message-filter option {
-  background-color: rgba(0, 0, 0, 0.2) !important;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  font-size: 1em;
 }
 
 .icon-stack {
@@ -720,4 +633,42 @@ button[type="submit"]:hover {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Epunda Slab", serif;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.news-form-div {
+  height: 70vh;
+  overflow: auto;
+  padding: 10px 10px;
+  border-radius: 10px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }

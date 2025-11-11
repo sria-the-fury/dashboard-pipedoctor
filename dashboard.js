@@ -147,4 +147,31 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", error);
     }
   }
+
+  const newsForm = document.getElementById("news-form");
+  newsForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const newsFormData = new FormData(newsForm);
+    console.log("newFormData => ", newsFormData);
+
+    fetch("add_news.php", {
+      method: "POST",
+      body: newsFormData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+
+      .then((data) => {
+        newsForm.reset();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  });
 });
