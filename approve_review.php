@@ -15,7 +15,7 @@ $response = ['success' => false, 'message' => 'Invalid ID.'];
 
 if ($id > 0) {
 
-    $sql = "UPDATE testimony SET approved = ?, archived = ? WHERE id = ?";
+    $sql = "UPDATE reviews SET approved = ?, archived = ? WHERE id = ?";
 
 
     $stmt = $conn->prepare($sql);

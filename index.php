@@ -130,13 +130,13 @@
           include 'connection.php';
           $filter = $_GET['filter'] ?? 'unapprove';
 
-          $review_query = "SELECT * FROM testimony WHERE approved = 0 AND archived = 0";
+          $review_query = "SELECT * FROM reviews WHERE approved = 0 AND archived = 0";
           if ($filter == 'all-reviews') {
-            $review_query = "SELECT * FROM testimony";
+            $review_query = "SELECT * FROM reviews";
           } elseif ($filter == 'approved') {
-            $review_query = "SELECT * FROM testimony WHERE approved = 1";
+            $review_query = "SELECT * FROM reviews WHERE approved = 1";
           } elseif ($filter == 'archived') {
-            $review_query = "SELECT * FROM testimony WHERE archived = 1";
+            $review_query = "SELECT * FROM reviews WHERE archived = 1";
           }
           $review_query .= " ORDER BY created_at DESC";
           $review_result = $connection_sql->query($review_query);

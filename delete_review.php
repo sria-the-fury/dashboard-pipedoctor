@@ -15,7 +15,7 @@ $response = ['success' => false, 'message' => 'Error: ID not provided or invalid
 
 if ($id > 0) {
 
-    $sql = "DELETE FROM testimony WHERE id = ?";
+    $sql = "DELETE FROM reviews WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
 

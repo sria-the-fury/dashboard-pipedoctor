@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append("approved", 1);
       formData.append("archived", 0);
 
-      const response = await fetch("update_review_status.php", {
+      const response = await fetch("approve_review.php", {
         method: "POST",
         body: formData,
       });
