@@ -248,7 +248,7 @@
               } else {
                 echo "<p style='text-align: center;'>No news found.</p>";
               }
-
+              mysqli_close($connection_sql);
               ?>
 
 
