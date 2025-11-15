@@ -3,6 +3,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const reviewCards = document.querySelectorAll(".review-card");
   const expandedClass = "expanded";
 
+  const selectedClassForButton = "selected-button";
+
+  const writeButton = document.getElementById("write-news");
+  const publishedButton = document.getElementById("all-published-news");
+  const publishedNewsArea = document.querySelector(".published-news-area");
+  const newsFormArea = document.querySelector(".news-form-write-area");
+  writeButton.addEventListener("click", () => {
+    publishedButton.classList.remove(selectedClassForButton);
+    writeButton.classList.add(selectedClassForButton);
+    publishedNewsArea.style.display = "none";
+    newsFormArea.style.display = "block";
+  });
+
+  publishedButton.addEventListener("click", () => {
+    writeButton.classList.remove(selectedClassForButton);
+    publishedButton.classList.add(selectedClassForButton);
+    newsFormArea.style.display = "none";
+    publishedNewsArea.style.display = "block";
+  });
+
   const closeAllCards = () => {
     reviewCards.forEach((card) => {
       const arrowUp = card.querySelector(".arrow-up");
@@ -65,14 +85,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         checkedReviews(reviewId, reviewCard);
       }
+    });
 
+  document
+    .getElementById("all-news-cards")
+    .addEventListener("click", function (e) {
       if (
-        e.target.classList.contains("archive-button") ||
-        e.target.closest(".archive-button")
+        e.target.classList.contains("news-delete-btn") ||
+        e.target.closest(".news-delete-btn")
       ) {
-        const reviewCard = e.target.closest(".review-card");
-        const reviewId = reviewCard.dataset.id;
-        markReviewAsArchived(reviewId, reviewCard);
+        const newsCard = e.target.closest(".news-card");
+        const cardId = newsCard.dataset.id;
+
+        deleteNews(cardId, newsCard);
       }
     });
 
@@ -104,34 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData();
       formData.append("id", id);
       formData.append("approved", 1);
-      formData.append("archived", 0);
 
       const response = await fetch("approve_review.php", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        reviewCard.remove();
-      } else {
-        console.log("Error updating status: ", result.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
-
-  async function markReviewAsArchived(reviewId, reviewCard) {
-    try {
-      const id = reviewId;
-      const formData = new FormData();
-      formData.append("id", id);
-      formData.append("archived", 1);
-      formData.append("approved", 0);
-
-      const response = await fetch("review_archive.php", {
         method: "POST",
         body: formData,
       });
@@ -174,4 +173,27 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Fetch error:", error);
       });
   });
+
+  async function deleteNews(newsId, newsCard) {
+    const id = newsId;
+    const card = newsCard;
+    try {
+      const formData = new FormData();
+      formData.append("id", id);
+
+      const response = await fetch("delete_news.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        card.remove();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 });

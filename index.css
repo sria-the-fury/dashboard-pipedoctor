@@ -4,32 +4,43 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  /* Set a fallback color in case the image doesn't load */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body {
   background-color: black;
   margin: 0;
   font-family: "Epunda Slab", serif !important;
   font-optical-sizing: auto;
   color: white;
   overflow: scroll;
-  scrollbar-width: none;
-  height: 100%; /* Important for the background to cover the full page */
+
+  height: 100%;
 }
 
-/* This is the key part for a fixed background on all devices */
 body::before {
   content: "";
-  position: fixed; /* Fixes the pseudo-element to the viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Puts the background behind the content */
+  z-index: -1;
   background-image: url("image/background.png");
   background-repeat: no-repeat;
-  background-size: cover; /* Ensures the image covers the entire area */
+  background-size: cover;
   background-position: center center;
   transition: margin-left 0.5s;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 #login-container {
@@ -661,9 +672,14 @@ button[type="submit"]:hover {
 
 .news-form-div {
   height: 70vh;
-  overflow: auto;
+  overflow-y: scroll;
   padding: 10px 10px;
   border-radius: 10px;
+  position: relative;
+}
+
+.news-form-div::-webkit-scrollbar {
+  display: none !important;
 }
 
 .form-group input:focus,
@@ -671,4 +687,117 @@ button[type="submit"]:hover {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.tab-buttons {
+  position: sticky;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  display: flex;
+  z-index: 10;
+  top: 0;
+  left: auto;
+  right: auto;
+
+  justify-content: center;
+}
+
+.published-news-btn {
+  background-color: rgba(128, 128, 128, 0.7);
+  padding: 8px 8px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  border: 1px solid white;
+}
+.write-news-btn {
+  background-color: rgba(128, 128, 128, 0.7);
+  padding: 8px 8px;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  border: 1px solid white;
+}
+
+.published-news-btn:hover,
+.write-news-btn:hover {
+  cursor: pointer;
+}
+
+.selected-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white !important;
+  transition: background-color 1s ease;
+}
+.published-news-area {
+  display: none;
+}
+
+.all-news-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.all-news-cards::-webkit-scrollbar {
+  display: none;
+}
+.all-news-cards {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.news-card.highlight {
+  border-left: 5px solid #007bff;
+  padding: 20px;
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+
+  background-color: #f7f9fc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  small {
+    color: grey;
+    padding: 4px 4px;
+  }
+}
+
+.news-card.highlight:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.news-card.highlight .card-title {
+  color: #007bff;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.news-card.highlight .card-text {
+  color: #444;
+  font-size: 1em;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.time-and-button-area {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.news-delete-btn {
+  background-color: #f05417;
+  padding: 4px 4px;
+  width: fit-content;
+  border-radius: 8px;
+  font-size: 0.9em;
+}
+.news-delete-btn:hover {
+  cursor: pointer;
 }

@@ -112,11 +112,6 @@
                 All Reviews
               </option>
 
-              <option value="archived"
-                <?php if (isset($_GET['filter']) && $_GET['filter'] == 'archived') echo 'selected'; ?>>
-                Archived Reviews
-              </option>
-
             </select>
           </form>
         </div>
@@ -131,8 +126,6 @@
             $review_query = "SELECT * FROM reviews";
           } elseif ($filter == 'approved') {
             $review_query = "SELECT * FROM reviews WHERE approved = 1";
-          } elseif ($filter == 'archived') {
-            $review_query = "SELECT * FROM reviews WHERE archived = 1";
           }
           $review_query .= " ORDER BY created_at DESC";
           $review_result = $connection_sql->query($review_query);
@@ -143,44 +136,21 @@
               $rating = (int)$row['clientRating'];
               $content = htmlspecialchars($row['testimony']);
               $isApproved = (int)$row['approved'];
-              $isArchived = (int)$row['archived'];
               $created_at = date('D, d M, H:i', strtotime($row['created_at']));
 
-              $reviewApprovedIcon = '';
               $reviewArrpovedButton = '';
-              $reviewArchiveIcon = '';
-              $reviewArchiveButton = '';
 
-              if ($isApproved == 1) {
-                $reviewApprovedIcon = '<i class="fa-solid fa-circle-check"></i>';
-              }
-              if ($isArchived == 1) {
-                $reviewArchiveIcon = '<i class="fa-solid fa-box-archive"></i>';
-              }
               if ($isApproved == 0) {
                 $reviewApprovedButton = '<div class="approved-button action-btn">
                                 <i class="fa-solid fa-circle-check"></i> <span>APPROVE</span>
                               </div>';
               }
 
-              if ($isArchived == 0) {
-                $reviewArchiveButton = '<div class="archive-button action-btn">
-                              <i class="fa-solid fa-box-archive"></i> <span>ARCHIVE</span>
-                              </div>';
-              }
-
-
               echo '<div class="review-card" data-id="' . $row["id"] . '">
                           <div class="name-address-rating-wrap">
                             <div class="name-address">
                               <div class="reviewer-name">' . $name . '</div>
                               <div class="reviewer-address"><i class="fa-solid fa-location-dot"></i> ' . $address . '</div>
-                            </div>
-
-                            <div class="review-status">
-                            ' . $reviewApprovedIcon . '
-                            ' . $reviewArchiveIcon . '
-                            
                             </div>
 
                             <div class="rating-time">
@@ -222,8 +192,7 @@
                             
                             <div class="review-action">
                               ' . $reviewApprovedButton . '
-                              ' . $reviewArchiveButton . '
-                              <div class="delete-button action-btn" id="delete-button-' . $row["id"] . '">
+                              <div class="delete-button action-btn" id="delete-button">
                                 <i class="fa-regular fa-circle-xmark"></i> <span>DELETE</span>
                               </div>
                             </div>
@@ -239,21 +208,69 @@
         </div>
       </div>
       <div class="news-form-area">
-        <h2>Publish Your News</h2>
+        <h2>Your News</h2>
+
         <div class="news-form-div backdrop-blur-l round frosted-glass">
-          <form id="news-form" method="POST">
-            <div class="form-group">
-              <label for="title">News Title</label>
-              <input type="text" id="news-title" name="title" required maxlength="80">
-            </div>
-            <div class="form-group">
-              <label for="article">News Article</label>
-              <textarea maxlength="500" id="news-article" name="article" rows="5" required></textarea>
+          <div class="tab-buttons">
+            <div class="write-news-btn selected-button" id='write-news'>WRITE</div>
+            <div class="published-news-btn" id='all-published-news'>PUBLISHED</div>
+          </div>
+
+          <div class="published-news-area">
+            <div class="all-news-cards" id="all-news-cards">
+              <?php
+              include 'connection.php';
+              $sql = "SELECT * FROM news ORDER BY published_at DESC";
+              $result = $connection_sql->query($sql);
+              if ($result->num_rows > 0) {
+
+                while ($row = $result->fetch_assoc()) {
+                  $publish_time = date('D, d M, H:i', strtotime($row['published_at']));
+
+                  echo '
+                            <div class="news-card highlight" data-id="' . $row['id'] . '">
+                            <div class="time-and-button-area">
+                                <small>
+                                ' . $publish_time . '
+                                </small>
+                                <div class="news-delete-btn" id="news-delete-btn">
+                                <i class="fa-regular fa-circle-xmark"></i> <span>DELETE</span>
+                                </div>
+                            </div>
+                                
+                                <h4 class="card-title"> ' . $row['title'] . '</h4>
+                                <p class="card-text">
+                                    ' . $row['article'] . '
+                                 </p>
+                             </div>
+                            ';
+                }
+              } else {
+                echo "<p style='text-align: center;'>No news found.</p>";
+              }
+
+              ?>
+
+
             </div>
 
-            <button type="submit" class="round-corner button ">Publish Your News</button>
+          </div>
+          <div class="news-form-write-area">
+            <form id="news-form" method="POST">
+              <div class="form-group">
+                <label for="title">News Title</label>
+                <input type="text" id="news-title" name="title" required maxlength="80">
+              </div>
+              <div class="form-group">
+                <label for="article">News Article</label>
+                <textarea maxlength="500" id="news-article" name="article" rows="5" required></textarea>
+              </div>
 
-          </form>
+              <button type="submit" class="round-corner button ">Publish Your News</button>
+
+            </form>
+          </div>
+
         </div>
 
 
