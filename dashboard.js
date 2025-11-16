@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData();
       formData.append("id", id);
 
-      const response = await fetch("delete_review.php", {
+      const response = await fetch("php/delete_review.php", {
         method: "POST",
         body: formData,
       });
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append("id", id);
       formData.append("approved", 1);
 
-      const response = await fetch("approve_review.php", {
+      const response = await fetch("php/approve_review.php", {
         method: "POST",
         body: formData,
       });
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsFormData = new FormData(newsForm);
     console.log("newFormData => ", newsFormData);
 
-    fetch("add_news.php", {
+    fetch("php/add_news.php", {
       method: "POST",
       body: newsFormData,
     })
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData();
       formData.append("id", id);
 
-      const response = await fetch("delete_news.php", {
+      const response = await fetch("php/delete_news.php", {
         method: "POST",
         body: formData,
       });
@@ -195,5 +195,71 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  }
+
+  const passwordModal = document.getElementById("password-modal");
+  const changePasswordBtn = document.getElementById("change-password-btn");
+  const closeModalBtn = document.getElementById("modal-close-btn");
+  const passwordForm = document.getElementById("change-password-form");
+  const passwordErrorMsg = document.getElementById("password-error-msg");
+
+  // Show the modal when "Change Password" is clicked
+  if (changePasswordBtn) {
+    changePasswordBtn.addEventListener("click", () => {
+      passwordModal.style.display = "flex";
+      passwordErrorMsg.textContent = "";
+      passwordForm.reset();
+    });
+  }
+
+  // Hide the modal when the "X" is clicked
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+      passwordModal.style.display = "none";
+    });
+  }
+
+  // Hide the modal if the overlay is clicked
+  if (passwordModal) {
+    passwordModal.addEventListener("click", (e) => {
+      if (e.target === passwordModal) {
+        passwordModal.style.display = "none";
+      }
+    });
+  }
+
+  // Handle the password change form submission
+  if (passwordForm) {
+    passwordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      passwordErrorMsg.textContent = ""; // Clear old errors
+
+      const newPassword = document.getElementById("new-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (newPassword !== confirmPassword) {
+        passwordErrorMsg.textContent = "New passwords do not match.";
+        return;
+      }
+
+      try {
+        const formData = new FormData(passwordForm);
+        const response = await fetch("php/change_password_process.php", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          passwordModal.style.display = "none";
+        } else {
+          passwordErrorMsg.textContent = result.message;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        passwordErrorMsg.textContent = "An error occurred. Please try again.";
+      }
+    });
   }
 });

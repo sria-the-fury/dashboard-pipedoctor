@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+  header('Location: login.php');
+  exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,39 +25,8 @@
 </head>
 
 <body>
-  <!-- login page -->
-  <div id="login-container">
-    <div class="login-area">
-      <div class="login-form-area">
-        <div class="login-card backdrop-blur-m">
-          <div class="logo">
-            <i class="fa-solid fa-faucet-drip"></i>
-            <span>Doctor</span>
-          </div>
-
-          <h3>Dashboard Login</h3>
-          <form id="login-form">
-            <div class="form-group">
-              <label for="email">Registered Email:</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password" required />
-            </div>
-
-            <div class="button-and-text">
-              <button type="submit">Login</button>
-              <span class="forgot-password" id="forget-password-btn">Forget Password?</span>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- after login -->
-  <div class="dashboard-area" id="dashboard-container">
+  <div class="dashboard-area" id="dashboard-container" style="display: block;">
     <div class="dashboard">
       <div class="top-bar">
         <div class="logo-dashboard">
@@ -57,10 +34,10 @@
           <span>Doct 'r</span>
         </div>
         <div class="name-and-email backdrop-blur-m">
-          <div class="owner-name" id="owner-name">Pipe Doctor's Admin</div>
+          <div class="owner-name" id="owner-name"><?php echo htmlspecialchars($_SESSION['admin_email']); ?></div>
         </div>
-
-        <button id="logout-button" class="logout-btn">Logout</button>
+        <a id="change-password-btn" class="password-chng-btn" style="margin-right: 15px;">Change Password</a>
+        <a href="php/logout_process.php" id="logout-button" class="logout-btn">Logout</a>
       </div>
     </div>
     <div class="summary">
@@ -70,7 +47,7 @@
         </div>
         <div class="card-info">
           <?php
-          include 'connection.php';
+          include 'php/connection.php';
           $review_count_query = "SELECT COUNT(*) AS total_reviews, AVG(clientRating) AS average_rating FROM reviews";
 
           $review_count_result = $connection_sql->query($review_count_query);
@@ -118,7 +95,7 @@
         <div class="review-list backdrop-blur-m" id="review-list">
 
           <?php
-          include 'connection.php';
+          include 'php/connection.php';
           $filter = $_GET['filter'] ?? 'unapprove';
 
           $review_query = "SELECT * FROM reviews WHERE approved = 0 AND archived = 0";
@@ -219,7 +196,7 @@
           <div class="published-news-area">
             <div class="all-news-cards" id="all-news-cards">
               <?php
-              include 'connection.php';
+              include 'php/connection.php';
               $sql = "SELECT * FROM news ORDER BY published_at DESC";
               $result = $connection_sql->query($sql);
               if ($result->num_rows > 0) {
@@ -277,10 +254,31 @@
       </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <div id="password-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content backdrop-blur-m">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        <h3>Change Your Password</h3>
 
-    <script src="app.js"></script>
+        <form id="change-password-form">
+          <div id="password-error-msg" style="color: red; text-align: center; margin-bottom: 10px;"></div>
+
+          <div class="form-group">
+            <label for="current-password">Current Password:</label>
+            <input type="password" id="current-password" name="current_password" required />
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password:</label>
+            <input type="password" id="new-password" name="new_password" required />
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm New Password:</label>
+            <input type="password" id="confirm-password" name="confirm_password" required />
+          </div>
+          <button type="submit" class="round-corner button">Update Password</button>
+        </form>
+      </div>
+    </div>
+
     <script src="dashboard.js"></script>
 </body>
 
