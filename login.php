@@ -29,6 +29,10 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
         <div class="login-area">
             <div class="login-form-area">
                 <div class="login-card backdrop-blur-m">
+                    <div class="logo">
+                        <i class="fa-solid fa-faucet-drip"></i>
+                        <span>Doctor</span>
+                    </div>
                     <h3>Dashboard Login</h3>
 
                     <?php
