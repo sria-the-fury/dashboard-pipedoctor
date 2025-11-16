@@ -26,6 +26,11 @@ if ($new_password !== $confirm_password) {
     exit;
 }
 
+if (strlen($new_password) < 5 && strlen($confirm_password) < 5) {
+    echo json_encode(['success' => false, 'message' => 'Password at least 6 characters']);
+    exit;
+}
+
 //Get current password hash from DB
 $stmt = $connection_sql->prepare("SELECT password_hash FROM admin WHERE email = ?");
 $stmt->bind_param("s", $email);

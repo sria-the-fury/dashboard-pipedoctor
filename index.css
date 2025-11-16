@@ -222,6 +222,7 @@ button[type="submit"]:hover {
   color: white;
   background-color: rgba(0, 123, 250, 0.2);
   padding: 8px 8px;
+  font-size: 0.9em !important;
   border-radius: 15px;
 }
 
@@ -702,6 +703,7 @@ button[type="submit"]:hover {
 .published-news-btn {
   background-color: rgba(128, 128, 128, 0.7);
   padding: 8px 8px;
+  font-size: 0.9em;
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
   border: 1px solid white;
@@ -709,6 +711,7 @@ button[type="submit"]:hover {
 .write-news-btn {
   background-color: rgba(128, 128, 128, 0.7);
   padding: 8px 8px;
+  font-size: 0.9em;
   border-bottom-left-radius: 20px;
   border-top-left-radius: 20px;
   border: 1px solid white;
@@ -802,6 +805,7 @@ button[type="submit"]:hover {
   border: 1px solid white;
   text-decoration: none;
   border-radius: 8px;
+  font-size: 0.9em;
   padding: 5px 5px;
 }
 
@@ -850,4 +854,10 @@ button[type="submit"]:hover {
 
 .modal-content .form-group {
   margin-bottom: 15px;
+}
+
+@media (max-width: 520px) {
+  .owner-name {
+    display: none;
+  }
 }
