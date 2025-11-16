@@ -704,12 +704,14 @@ button[type="submit"]:hover {
   background-color: rgba(128, 128, 128, 0.7);
   padding: 8px 8px;
   font-size: 0.9em;
+  color: lightgrey;
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
   border: 1px solid white;
 }
 .write-news-btn {
   background-color: rgba(128, 128, 128, 0.7);
+  color: lightgrey;
   padding: 8px 8px;
   font-size: 0.9em;
   border-bottom-left-radius: 20px;
@@ -728,6 +730,10 @@ button[type="submit"]:hover {
   transition: background-color 1s ease;
 }
 .published-news-area {
+  display: block;
+}
+
+.news-form-write-area {
   display: none;
 }
 
@@ -750,18 +756,22 @@ button[type="submit"]:hover {
 }
 
 .news-card.highlight {
-  border-left: 5px solid #007bff;
+  border-left: 4px solid white;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
   padding: 20px;
   margin-top: 10px;
   width: 100%;
   margin-bottom: 20px;
   border-radius: 10px;
-
-  background-color: #f7f9fc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.15);
   transition: transform 0.3s ease;
   small {
-    color: grey;
+    color: lightgreen;
     padding: 4px 4px;
   }
 }
@@ -772,13 +782,13 @@ button[type="submit"]:hover {
 }
 
 .news-card.highlight .card-title {
-  color: #007bff;
+  color: white;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .news-card.highlight .card-text {
-  color: #444;
+  color: lightgray;
   font-size: 1em;
   text-align: justify;
   line-height: 1.5;

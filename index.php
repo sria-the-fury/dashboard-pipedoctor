@@ -189,8 +189,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 
         <div class="news-form-div backdrop-blur-l round frosted-glass">
           <div class="tab-buttons">
-            <div class="write-news-btn selected-button" id='write-news'>WRITE</div>
-            <div class="published-news-btn" id='all-published-news'>PUBLISHED</div>
+            <div class="write-news-btn" id='write-news'>WRITE</div>
+            <div class="published-news-btn selected-button" id='all-published-news'>PUBLISHED</div>
           </div>
 
           <div class="published-news-area">

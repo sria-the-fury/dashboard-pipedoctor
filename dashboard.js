@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const newsFormArea = document.querySelector(".news-form-write-area");
   writeButton.addEventListener("click", () => {
     publishedButton.classList.remove(selectedClassForButton);
+    
     writeButton.classList.add(selectedClassForButton);
     publishedNewsArea.style.display = "none";
     newsFormArea.style.display = "block";
